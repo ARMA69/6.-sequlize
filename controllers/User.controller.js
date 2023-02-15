@@ -37,9 +37,7 @@ module.exports.deleteByPK = async (req, res, next) => {
       params: { id },
     } = req;
     const rowsCount = await User.destroy({
-      where: {
-        id,
-      },
+      where: { id },
     });
 
     if (rowsCount) {
@@ -47,6 +45,23 @@ module.exports.deleteByPK = async (req, res, next) => {
     } else {
       return res.status(204).send();
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports.updateUser = async (req, res, next) => {
+  try {
+    const {
+      params: { id },
+      body,
+    } = req;
+    const result = await User.update(body, {
+      where: {
+        id,
+      },
+    });
+    return res.status(200).send();
   } catch (error) {
     next(error);
   }
