@@ -16,16 +16,16 @@ module.exports = (sequelize, DataTypes) => {
       firstName: {
         field: "first_name",
         type: DataTypes.STRING,
-        allownNull: false,
+        allowNull: false,
         validate: {
           notNull: true,
           notEmpty: true,
         },
       },
-      LastName: {
+      lastName: {
         field: "last_name",
         type: DataTypes.STRING,
-        allownNull: false,
+        allowNull: false,
         validate: {
           notNull: true,
           notEmpty: true,
@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: {
         type: DataTypes.STRING,
-        allownNull: false,
+        allowNull: false,
         unique: true,
         validate: {
           isEmail: true,
@@ -41,17 +41,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       password: {
         type: DataTypes.TEXT,
-        allownNull: false,
+        allowNull: false,
       },
       birthday: {
         type: DataTypes.DATEONLY,
         validate: {
           isDate: true,
-          isValidDate(value) {
-            if (isAfter(new Data(value), new Date())) {
-              throw new Error("Your birthday must be earliear than today");
-            }
-          },
+          isBefore: new Date().toDateString(),
         },
       },
       gender: {
