@@ -1,5 +1,7 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -9,57 +11,57 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.hasMany(models.Task, {
+        foreignKey: 'userId'
+      });
     }
   }
-  User.init(
-    {
-      firstName: {
-        field: "first_name",
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: true,
-          notEmpty: true,
-        },
-      },
-      lastName: {
-        field: "last_name",
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: true,
-          notEmpty: true,
-        },
-      },
-      email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-          isEmail: true,
-        },
-      },
-      password: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
-      birthday: {
-        type: DataTypes.DATEONLY,
-        validate: {
-          isDate: true,
-          isBefore: new Date().toDateString(),
-        },
-      },
-      gender: {
-        type: DataTypes.STRING,
-      },
+  User.init({
+    firstName: {
+      field: 'first_name',
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
     },
-    {
-      sequelize,
-      modelName: "User",
-      tableName: "users",
-      underscored: true,
+    lastName: {
+      field: 'last_name',
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notNull: true,
+        notEmpty: true
+      }
+    },
+    email: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true
+      }
+    },
+    password: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    birthday: {
+      type: DataTypes.DATEONLY,
+      validate: {
+        isDate: true,
+        isBefore: new Date().toDateString()
+      }
+    },
+    gender: {
+      type: DataTypes.STRING
     }
-  );
+  }, {
+    sequelize,
+    modelName: 'User',
+    tableName: 'users',
+    underscored: true
+  });
   return User;
 };
