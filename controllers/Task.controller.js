@@ -10,3 +10,14 @@ module.exports.createTask = async(req, res, next) => {
         next(error);
     }
 }
+
+module.exports.getAllUserTasks = async (req,res,next) => {
+    try {
+        const {params: {userId}} = req;
+        const user = await User.findByPk(userId);
+        const tasks = await user.getTasks();
+        return res.status(200).send(tasks);
+    } catch (error) {
+        next(error);
+    }
+}
